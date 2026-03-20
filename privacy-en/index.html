@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GardenSage — Privacy Policy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #2D3B2D;
+            background: #FAFAF5;
+            padding: 24px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 1.5rem; margin-bottom: 8px; color: #1B5E20; }
+        h2 { font-size: 1.15rem; margin-top: 28px; margin-bottom: 8px; color: #2E7D32; }
+        p, li { font-size: 0.95rem; margin-bottom: 8px; }
+        ul { padding-left: 20px; margin-bottom: 12px; }
+        a { color: #2E7D32; }
+        .date { font-size: 0.85rem; color: #666; margin-bottom: 24px; }
+        .lang { text-align: right; font-size: 0.85rem; margin-bottom: 16px; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
+    </style>
+</head>
+<body>
+    <div class="lang"><a href="../privacy-fr/">Fran&ccedil;ais</a></div>
+
+    <h1>Privacy Policy — GardenSage</h1>
+    <p class="date">Last updated: March 18, 2026</p>
+
+    <p>GardenSage ("the App") is published by Sophie Slama ("we"). This policy explains how we collect, use, and protect your personal data, in compliance with the General Data Protection Regulation (GDPR).</p>
+
+    <h2>1. Data Controller</h2>
+    <p>Sophie Slama<br>
+    Contact: <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+
+    <h2>2. Data Collected</h2>
+    <ul>
+        <li><strong>Account</strong>: email address (authentication)</li>
+        <li><strong>Approximate location</strong>: city or region (manual entry or approximate geolocation, for climate-based recommendations)</li>
+        <li><strong>Garden profile</strong>: experience level, garden type, area, sunlight, soil type, goals</li>
+        <li><strong>Plants</strong>: plants added to your garden</li>
+        <li><strong>Tasks</strong>: planned and completed gardening tasks</li>
+        <li><strong>Flore conversations</strong>: exchanges with the Flore AI assistant (garden context only)</li>
+    </ul>
+
+    <h2>3. Purpose of Processing</h2>
+    <ul>
+        <li>Personalization of plant and care recommendations</li>
+        <li>Generation of tasks tailored to your garden and climate</li>
+        <li>Operation of the Flore AI assistant (personalized advice)</li>
+        <li>Synchronization of your data across devices</li>
+    </ul>
+
+    <h2>4. Legal Basis</h2>
+    <p>The processing of your data is based on your <strong>consent</strong> (GDPR Article 6.1.a), granted when you create your account.</p>
+
+    <h2>5. Storage and Security</h2>
+    <p>Your data is stored on <strong>Supabase</strong> servers located in <strong>Frankfurt, Germany (EU)</strong>. Communication is encrypted in transit (TLS) and access is protected by Row Level Security policies.</p>
+    <p>Data is also stored locally on your device (offline mode) via SwiftData.</p>
+
+    <h2>6. Data Retention</h2>
+    <ul>
+        <li>Your data remains active as long as your account exists.</li>
+        <li>Deleted data is first marked as deleted (soft delete), then <strong>permanently purged after 30 days</strong>.</li>
+        <li>When you delete your account, all your data is permanently removed.</li>
+    </ul>
+
+    <h2>7. Use of Artificial Intelligence</h2>
+    <p>The App includes an assistant called <strong>Flore</strong>, which uses a generative AI model (<strong>Claude</strong>, developed by Anthropic) to provide personalized gardening advice.</p>
+    <ul>
+        <li><strong>No directly identifying personal data</strong> (email, name) is sent to the model. Only anonymized garden context is used (garden type, plants, climate region).</li>
+        <li>Your conversations with Flore are <strong>not used to train</strong> the AI model.</li>
+        <li>Processing is performed through server functions (Supabase Edge Functions) that act as intermediaries.</li>
+    </ul>
+
+    <h2>8. Sub-processors</h2>
+    <ul>
+        <li><strong>Supabase Inc.</strong> — hosting, database, authentication (EU servers, Frankfurt)</li>
+        <li><strong>Anthropic PBC</strong> — AI model for the Flore assistant (no identifying personal data transmitted)</li>
+        <li><strong>Apple Inc.</strong> — crash reports (MetricKit), push notifications (APNs)</li>
+    </ul>
+
+    <h2>9. Your Rights</h2>
+    <p>Under the GDPR, you have the following rights:</p>
+    <ul>
+        <li><strong>Access</strong>: obtain a copy of your data</li>
+        <li><strong>Rectification</strong>: correct inaccurate data</li>
+        <li><strong>Erasure</strong>: request deletion of your account and data</li>
+        <li><strong>Portability</strong>: receive your data in a structured format</li>
+        <li><strong>Objection</strong>: object to the processing of your data</li>
+    </ul>
+    <p>To exercise your rights, contact us at: <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+    <p>You can also delete your account directly from the app (Profile &gt; Delete my account).</p>
+
+    <h2>10. Contact</h2>
+    <p>For any questions about this policy or your data: <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+
+    <hr>
+    <p style="font-size: 0.8rem; color: #999;">&copy; 2026 GardenSage — Sophie Slama</p>
+</body>
+</html>

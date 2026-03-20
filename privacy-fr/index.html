@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GardenSage — Politique de confidentialit&eacute;</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #2D3B2D;
+            background: #FAFAF5;
+            padding: 24px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 1.5rem; margin-bottom: 8px; color: #1B5E20; }
+        h2 { font-size: 1.15rem; margin-top: 28px; margin-bottom: 8px; color: #2E7D32; }
+        p, li { font-size: 0.95rem; margin-bottom: 8px; }
+        ul { padding-left: 20px; margin-bottom: 12px; }
+        a { color: #2E7D32; }
+        .date { font-size: 0.85rem; color: #666; margin-bottom: 24px; }
+        .lang { text-align: right; font-size: 0.85rem; margin-bottom: 16px; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
+    </style>
+</head>
+<body>
+    <div class="lang"><a href="../privacy-en/">English</a></div>
+
+    <h1>Politique de confidentialit&eacute; &mdash; GardenSage</h1>
+    <p class="date">Derni&egrave;re mise &agrave; jour : 18 mars 2026</p>
+
+    <p>GardenSage (&laquo;&nbsp;l'Application&nbsp;&raquo;) est &eacute;dit&eacute;e par Sophie Slama (&laquo;&nbsp;nous&nbsp;&raquo;). Cette politique explique comment nous collectons, utilisons et prot&eacute;geons vos donn&eacute;es personnelles, conform&eacute;ment au R&egrave;glement g&eacute;n&eacute;ral sur la protection des donn&eacute;es (RGPD).</p>
+
+    <h2>1. Responsable du traitement</h2>
+    <p>Sophie Slama<br>
+    Contact : <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+
+    <h2>2. Donn&eacute;es collect&eacute;es</h2>
+    <ul>
+        <li><strong>Compte</strong> : adresse e-mail (authentification)</li>
+        <li><strong>Localisation approximative</strong> : ville ou r&eacute;gion (saisie manuelle ou g&eacute;olocalisation approximative, pour les recommandations climatiques)</li>
+        <li><strong>Profil jardinier</strong> : niveau d'exp&eacute;rience, type de jardin, surface, ensoleillement, type de sol, objectifs</li>
+        <li><strong>Plantes</strong> : plantes ajout&eacute;es &agrave; votre jardin</li>
+        <li><strong>T&acirc;ches</strong> : t&acirc;ches de jardinage planifi&eacute;es et r&eacute;alis&eacute;es</li>
+        <li><strong>Conversations Flore</strong> : &eacute;changes avec l'assistant IA Flore (contexte jardin uniquement)</li>
+    </ul>
+
+    <h2>3. Finalit&eacute; du traitement</h2>
+    <ul>
+        <li>Personnalisation des recommandations de plantes et de soins</li>
+        <li>G&eacute;n&eacute;ration de t&acirc;ches adapt&eacute;es &agrave; votre jardin et votre climat</li>
+        <li>Fonctionnement de l'assistant IA Flore (conseils personnalis&eacute;s)</li>
+        <li>Synchronisation de vos donn&eacute;es entre appareils</li>
+    </ul>
+
+    <h2>4. Base l&eacute;gale</h2>
+    <p>Le traitement de vos donn&eacute;es repose sur votre <strong>consentement</strong> (article 6.1.a du RGPD), accord&eacute; lors de la cr&eacute;ation de votre compte.</p>
+
+    <h2>5. Stockage et s&eacute;curit&eacute;</h2>
+    <p>Vos donn&eacute;es sont stock&eacute;es sur les serveurs <strong>Supabase</strong>, situ&eacute;s &agrave; <strong>Francfort, Allemagne (UE)</strong>. La communication est chiffr&eacute;e en transit (TLS) et les acc&egrave;s sont prot&eacute;g&eacute;s par des politiques de s&eacute;curit&eacute; au niveau des lignes (Row Level Security).</p>
+    <p>Les donn&eacute;es sont &eacute;galement stock&eacute;es localement sur votre appareil (mode hors-ligne) via SwiftData.</p>
+
+    <h2>6. Dur&eacute;e de conservation</h2>
+    <ul>
+        <li>Vos donn&eacute;es restent actives tant que votre compte existe.</li>
+        <li>Les donn&eacute;es supprim&eacute;es sont d'abord marqu&eacute;es comme supprim&eacute;es (soft delete), puis <strong>purg&eacute;es d&eacute;finitivement apr&egrave;s 30 jours</strong>.</li>
+        <li>En cas de suppression de compte, toutes vos donn&eacute;es sont supprim&eacute;es d&eacute;finitivement.</li>
+    </ul>
+
+    <h2>7. Utilisation de l'intelligence artificielle</h2>
+    <p>L'Application int&egrave;gre un assistant appel&eacute; <strong>Flore</strong>, qui utilise un mod&egrave;le d'IA g&eacute;n&eacute;rative (<strong>Claude</strong>, d&eacute;velopp&eacute; par Anthropic) pour fournir des conseils de jardinage personnalis&eacute;s.</p>
+    <ul>
+        <li><strong>Aucune donn&eacute;e personnelle directement identifiante</strong> (email, nom) n'est transmise au mod&egrave;le. Seul un contexte jardin anonymis&eacute; est utilis&eacute; (type de jardin, plantes, r&eacute;gion climatique).</li>
+        <li>Vos conversations avec Flore <strong>ne sont pas utilis&eacute;es pour entra&icirc;ner</strong> le mod&egrave;le d'IA.</li>
+        <li>Le traitement est effectu&eacute; via des fonctions serveur (Supabase Edge Functions) qui servent d'interm&eacute;diaire.</li>
+    </ul>
+
+    <h2>8. Sous-traitants</h2>
+    <ul>
+        <li><strong>Supabase Inc.</strong> &mdash; h&eacute;bergement, base de donn&eacute;es, authentification (serveurs UE, Francfort)</li>
+        <li><strong>Anthropic PBC</strong> &mdash; mod&egrave;le d'IA pour l'assistant Flore (aucune donn&eacute;e personnelle identifiante transmise)</li>
+        <li><strong>Apple Inc.</strong> &mdash; rapports de crash (MetricKit), notifications push (APNs)</li>
+    </ul>
+
+    <h2>9. Vos droits</h2>
+    <p>Conform&eacute;ment au RGPD, vous disposez des droits suivants :</p>
+    <ul>
+        <li><strong>Acc&egrave;s</strong> : obtenir une copie de vos donn&eacute;es</li>
+        <li><strong>Rectification</strong> : corriger des donn&eacute;es inexactes</li>
+        <li><strong>Suppression</strong> : demander la suppression de votre compte et de vos donn&eacute;es</li>
+        <li><strong>Portabilit&eacute;</strong> : recevoir vos donn&eacute;es dans un format structur&eacute;</li>
+        <li><strong>Opposition</strong> : vous opposer au traitement de vos donn&eacute;es</li>
+    </ul>
+    <p>Pour exercer vos droits, &eacute;crivez-nous &agrave; : <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+    <p>Vous pouvez &eacute;galement supprimer votre compte directement depuis l'application (Profil &gt; Supprimer mon compte).</p>
+
+    <h2>10. Contact</h2>
+    <p>Pour toute question relative &agrave; cette politique ou &agrave; vos donn&eacute;es : <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+
+    <hr>
+    <p style="font-size: 0.8rem; color: #999;">&copy; 2026 GardenSage &mdash; Sophie Slama</p>
+</body>
+</html>
