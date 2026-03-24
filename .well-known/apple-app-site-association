@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "QLSTX2JJPF.com.sopddl.gardensage.app"
+        ],
+        "paths": [
+          "/invite/*"
+        ]
+      }
+    ]
+  }
+}
