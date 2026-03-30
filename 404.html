@@ -54,14 +54,12 @@
         </p>
     </div>
     <script>
-        // Extraire le token depuis l'URL
         const path = window.location.pathname;
         const token = path.split('/invite/')[1];
-        const appLink = 'gardensage://invite/' + (token || '');
-        document.getElementById('openApp').href = appLink;
-
-        // Tenter d'ouvrir l'app automatiquement
         if (token) {
+            const appLink = 'gardensage://invite/' + token;
+            document.getElementById('openApp').href = appLink;
+            // Auto-attempt to open the app via URL scheme (fallback when Universal Links fail)
             window.location.href = appLink;
         }
     </script>
