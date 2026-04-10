@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GardenSage — Mot de passe</title>
+    <title>GardenSage — Réinitialisation du mot de passe</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -19,14 +19,44 @@
             background: white;
             border-radius: 20px;
             padding: 40px 30px;
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
             text-align: center;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
         }
-        .icon { font-size: 64px; margin-bottom: 20px; }
-        h1 { font-size: 24px; color: #2d5016; margin-bottom: 12px; }
-        p { font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 24px; }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #4a7c25;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+        .brand {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2d5016;
+            margin-bottom: 4px;
+        }
+        .tagline {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
         .btn {
             display: inline-block;
             background: #4a7c25;
@@ -37,32 +67,78 @@
             font-size: 17px;
             font-weight: 600;
             transition: background 0.2s;
+            width: 100%;
+            max-width: 300px;
         }
         .btn:hover { background: #3d6820; }
-        .success { color: #2d5016; font-weight: 600; }
+        .footer {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 24px;
+        }
+        .spinner {
+            display: none;
+            margin: 20px auto;
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e8f5e0;
+            border-top-color: #4a7c25;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .spinner.active { display: block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="card">
-        <div class="icon">🔑</div>
-        <h1>Mot de passe modifié</h1>
-        <p>Ton mot de passe a été réinitialisé avec succès. Tu peux maintenant te connecter dans l'app.</p>
-        <a class="btn" id="openApp" href="gardensage://auth/callback">Ouvrir GardenSage</a>
-    </div>
-    <script>
-        // Bug fix: hide technical URL parameters from the user and handle the deep link cleanly.
-        // Supabase appends auth tokens in the URL fragment (#access_token=...&type=recovery).
-        (function() {
-            const hash = window.location.hash;
+        <div class="logo">🌿</div>
+        <div class="brand">GardenSage</div>
+        <div class="tagline">Votre assistant jardin</div>
 
-            // 1. Clean the URL bar immediately to hide technical parameters
+        <div id="loading">
+            <h1>Réinitialisation en cours...</h1>
+            <div class="spinner active"></div>
+            <p>Nous vérifions votre lien de réinitialisation.<br>Vous allez être redirigé vers l'app.</p>
+        </div>
+
+        <div id="success" style="display:none;">
+            <h1>✅ Lien vérifié !</h1>
+            <p>Ouvrez GardenSage pour choisir votre nouveau mot de passe.</p>
+            <a class="btn" id="openApp" href="gardensage://auth/callback">Ouvrir GardenSage</a>
+        </div>
+
+        <div id="error" style="display:none;">
+            <h1>❌ Lien expiré</h1>
+            <p>Ce lien de réinitialisation n'est plus valide. Veuillez faire une nouvelle demande depuis l'app GardenSage.</p>
+        </div>
+
+        <p class="footer">GardenSage — Jardinez malin avec Flore IA</p>
+    </div>
+
+    <script>
+        (function() {
+            var hash = window.location.hash;
+
+            // Nettoyer l'URL (cacher les paramètres techniques)
             if (hash && window.history.replaceState) {
                 window.history.replaceState(null, '', window.location.pathname);
             }
 
-            // 2. Attempt to open the app with the auth tokens
-            if (hash) {
-                window.location.href = 'gardensage://auth/callback' + hash;
+            if (hash && hash.includes('access_token')) {
+                // Lien valide — rediriger vers l'app
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('success').style.display = 'block';
+                document.getElementById('openApp').href = 'gardensage://auth/callback' + hash;
+
+                // Tenter l'ouverture automatique
+                setTimeout(function() {
+                    window.location.href = 'gardensage://auth/callback' + hash;
+                }, 500);
+            } else {
+                // Pas de token — lien expiré ou invalide
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
             }
         })();
     </script>
