@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GardenSage — Invitation</title>
+    <title>GardenSage — Mot de passe</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -39,28 +39,22 @@
             transition: background 0.2s;
         }
         .btn:hover { background: #3d6820; }
-        .subtitle { font-size: 13px; color: #999; margin-top: 16px; }
+        .success { color: #2d5016; font-weight: 600; }
     </style>
 </head>
 <body>
     <div class="card">
-        <div class="icon">🌿</div>
-        <h1>Tu es invité à rejoindre un jardin !</h1>
-        <p>Un ami t'invite à prendre soin de son jardin ensemble sur GardenSage.</p>
-        <a class="btn" id="openApp" href="#">Ouvrir GardenSage</a>
-        <p class="subtitle">
-            Tu n'as pas encore l'app ?<br>
-            <a href="https://apps.apple.com/app/gardensage/id6744122430" style="color: #4a7c25;">Télécharge-la sur l'App Store</a>
-        </p>
+        <div class="icon">🔑</div>
+        <h1>Mot de passe modifié</h1>
+        <p>Ton mot de passe a été réinitialisé avec succès. Tu peux maintenant te connecter dans l'app.</p>
+        <a class="btn" id="openApp" href="gardensage://auth/callback">Ouvrir GardenSage</a>
     </div>
     <script>
-        const path = window.location.pathname;
-        const token = path.split('/invite/')[1];
-        if (token) {
-            const appLink = 'gardensage://invite/' + token;
-            document.getElementById('openApp').href = appLink;
-            // Auto-attempt to open the app via URL scheme (fallback when Universal Links fail)
-            window.location.href = appLink;
+        // Tenter d'ouvrir l'app automatiquement
+        const hash = window.location.hash;
+        if (hash) {
+            // Supabase ajoute le token dans le fragment (#access_token=...)
+            window.location.href = 'gardensage://auth/callback' + hash;
         }
     </script>
 </body>
