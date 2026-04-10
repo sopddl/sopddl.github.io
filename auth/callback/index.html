@@ -50,12 +50,21 @@
         <a class="btn" id="openApp" href="gardensage://auth/callback">Ouvrir GardenSage</a>
     </div>
     <script>
-        // Tenter d'ouvrir l'app automatiquement
-        const hash = window.location.hash;
-        if (hash) {
-            // Supabase ajoute le token dans le fragment (#access_token=...)
-            window.location.href = 'gardensage://auth/callback' + hash;
-        }
+        // Bug fix: hide technical URL parameters from the user and handle the deep link cleanly.
+        // Supabase appends auth tokens in the URL fragment (#access_token=...&type=recovery).
+        (function() {
+            const hash = window.location.hash;
+
+            // 1. Clean the URL bar immediately to hide technical parameters
+            if (hash && window.history.replaceState) {
+                window.history.replaceState(null, '', window.location.pathname);
+            }
+
+            // 2. Attempt to open the app with the auth tokens
+            if (hash) {
+                window.location.href = 'gardensage://auth/callback' + hash;
+            }
+        })();
     </script>
 </body>
 </html>
