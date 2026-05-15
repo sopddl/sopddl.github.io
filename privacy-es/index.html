@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GardenSage — Política de privacidad</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #2D3B2D;
+            background: #FAFAF5;
+            padding: 24px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 1.5rem; margin-bottom: 8px; color: #1B5E20; }
+        h2 { font-size: 1.15rem; margin-top: 28px; margin-bottom: 8px; color: #2E7D32; }
+        p, li { font-size: 0.95rem; margin-bottom: 8px; }
+        ul { padding-left: 20px; margin-bottom: 12px; }
+        a { color: #2E7D32; }
+        .date { font-size: 0.85rem; color: #666; margin-bottom: 24px; }
+        .lang { text-align: right; font-size: 0.85rem; margin-bottom: 16px; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
+    </style>
+</head>
+<body>
+    <div class="lang"><a href="../privacy-fr/">Fran&ccedil;ais</a> &middot; <a href="../privacy-en/">English</a></div>
+
+    <h1>Pol&iacute;tica de privacidad &mdash; GardenSage</h1>
+    <p class="date">&Uacute;ltima actualizaci&oacute;n: 18 de marzo de 2026</p>
+
+    <p>GardenSage (&laquo;la Aplicaci&oacute;n&raquo;) es editada por Sophie Durègne (&laquo;nosotros&raquo;). Esta pol&iacute;tica explica c&oacute;mo recogemos, utilizamos y protegemos tus datos personales, conforme al Reglamento General de Protecci&oacute;n de Datos (RGPD).</p>
+
+    <h2>1. Responsable del tratamiento</h2>
+    <p>Sophie Durègne<br>
+    Contacto: <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+
+    <h2>2. Datos recogidos</h2>
+    <ul>
+        <li><strong>Cuenta</strong>: direcci&oacute;n de correo electr&oacute;nico (autenticaci&oacute;n)</li>
+        <li><strong>Ubicaci&oacute;n aproximada</strong>: ciudad o regi&oacute;n (introducci&oacute;n manual o geolocalizaci&oacute;n aproximada, para recomendaciones clim&aacute;ticas)</li>
+        <li><strong>Perfil de jardinero</strong>: nivel de experiencia, tipo de huerto, superficie, exposici&oacute;n solar, tipo de suelo, objetivos</li>
+        <li><strong>Plantas</strong>: plantas a&ntilde;adidas a tu huerto</li>
+        <li><strong>Tareas</strong>: tareas de jardiner&iacute;a planificadas y realizadas</li>
+        <li><strong>Conversaciones con Flore</strong>: intercambios con el asistente de IA Flore (contexto del huerto &uacute;nicamente)</li>
+    </ul>
+
+    <h2>3. Finalidad del tratamiento</h2>
+    <ul>
+        <li>Personalizaci&oacute;n de las recomendaciones de plantas y cuidados</li>
+        <li>Generaci&oacute;n de tareas adaptadas a tu huerto y a tu clima</li>
+        <li>Funcionamiento del asistente de IA Flore (consejos personalizados)</li>
+        <li>Sincronizaci&oacute;n de tus datos entre dispositivos</li>
+    </ul>
+
+    <h2>4. Base legal</h2>
+    <p>El tratamiento de tus datos se basa en tu <strong>consentimiento</strong> (art&iacute;culo 6.1.a del RGPD), otorgado al crear tu cuenta.</p>
+
+    <h2>5. Almacenamiento y seguridad</h2>
+    <p>Tus datos se almacenan en los servidores <strong>Supabase</strong>, ubicados en <strong>Frankfurt, Alemania (UE)</strong>. La comunicaci&oacute;n est&aacute; cifrada en tr&aacute;nsito (TLS) y los accesos est&aacute;n protegidos por pol&iacute;ticas de seguridad a nivel de fila (Row Level Security).</p>
+    <p>Los datos tambi&eacute;n se almacenan localmente en tu dispositivo (modo sin conexi&oacute;n) v&iacute;a SwiftData.</p>
+
+    <h2>6. Plazo de conservaci&oacute;n</h2>
+    <ul>
+        <li>Tus datos permanecen activos mientras exista tu cuenta.</li>
+        <li>Los datos eliminados se marcan primero como suprimidos (soft delete) y luego se <strong>borran definitivamente a los 30 d&iacute;as</strong>.</li>
+        <li>Si suprimes tu cuenta, todos tus datos se eliminan definitivamente.</li>
+    </ul>
+
+    <h2>7. Uso de la inteligencia artificial</h2>
+    <p>La Aplicaci&oacute;n integra un asistente llamado <strong>Flore</strong>, que utiliza un modelo de IA generativa (<strong>Claude</strong>, desarrollado por Anthropic) para ofrecer consejos de jardiner&iacute;a personalizados.</p>
+    <ul>
+        <li><strong>Ning&uacute;n dato personal directamente identificable</strong> (correo, nombre) se transmite al modelo. Solo se utiliza un contexto del huerto anonimizado (tipo de huerto, plantas, regi&oacute;n clim&aacute;tica).</li>
+        <li>Tus conversaciones con Flore <strong>no se utilizan para entrenar</strong> el modelo de IA.</li>
+        <li>El tratamiento se realiza mediante funciones de servidor (Supabase Edge Functions) que act&uacute;an como intermediarias.</li>
+    </ul>
+
+    <h2>8. Subcontratistas</h2>
+    <ul>
+        <li><strong>Supabase Inc.</strong> &mdash; alojamiento, base de datos, autenticaci&oacute;n (servidores UE, Frankfurt)</li>
+        <li><strong>Anthropic PBC</strong> &mdash; modelo de IA para el asistente Flore (ning&uacute;n dato personal identificable transmitido)</li>
+        <li><strong>Apple Inc.</strong> &mdash; informes de fallos (MetricKit), notificaciones push (APNs)</li>
+    </ul>
+
+    <h2>9. Tus derechos</h2>
+    <p>Conforme al RGPD, dispones de los siguientes derechos:</p>
+    <ul>
+        <li><strong>Acceso</strong>: obtener una copia de tus datos</li>
+        <li><strong>Rectificaci&oacute;n</strong>: corregir datos inexactos</li>
+        <li><strong>Supresi&oacute;n</strong>: solicitar la eliminaci&oacute;n de tu cuenta y de tus datos</li>
+        <li><strong>Portabilidad</strong>: recibir tus datos en un formato estructurado</li>
+        <li><strong>Oposici&oacute;n</strong>: oponerte al tratamiento de tus datos</li>
+    </ul>
+    <p>Para ejercer tus derechos, escr&iacute;benos a: <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+    <p>Tambi&eacute;n puedes eliminar tu cuenta directamente desde la aplicaci&oacute;n (Perfil &gt; Eliminar mi cuenta).</p>
+
+    <h2>10. Contacto</h2>
+    <p>Para cualquier pregunta sobre esta pol&iacute;tica o tus datos: <a href="mailto:gardensage.support@gmail.com">gardensage.support@gmail.com</a></p>
+
+    <hr>
+    <p style="font-size: 0.8rem; color: #999;">&copy; 2026 GardenSage &mdash; Sophie Durègne</p>
+</body>
+</html>
