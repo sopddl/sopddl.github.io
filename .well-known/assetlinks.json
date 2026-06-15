@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.sopddl.floresage",
+      "sha256_cert_fingerprints": [
+        "D4:6E:40:BA:C5:DA:7D:B8:36:2E:FF:7A:45:E6:A6:17:A1:5C:8A:88:DA:C3:73:D3:96:E8:3D:B0:22:F6:59:8A",
+        "35:68:33:6C:35:06:87:0E:1B:B1:F1:FA:E8:1D:AB:89:D9:52:B2:4C:21:B0:A7:25:FD:AC:87:D1:4F:62:18:42"
+      ]
+    }
+  }
+]
