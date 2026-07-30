@@ -13,12 +13,23 @@
             "/": "/auth/callback"
           }
         ]
+      },
+      {
+        "appIDs": [
+          "QLSTX2JJPF.com.sopddl.tailorsage.app"
+        ],
+        "components": [
+          {
+            "/": "/tailorsage/auth/callback"
+          }
+        ]
       }
     ]
   },
   "webcredentials": {
     "apps": [
-      "QLSTX2JJPF.com.sopddl.gardensage.app"
+      "QLSTX2JJPF.com.sopddl.gardensage.app",
+      "QLSTX2JJPF.com.sopddl.tailorsage.app"
     ]
   }
 }
