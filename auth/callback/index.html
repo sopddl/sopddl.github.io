@@ -119,24 +119,35 @@
     <script>
         (function() {
             var hash = window.location.hash;
+            var search = window.location.search;
+
+            // Supabase PKCE (flow par défaut désormais) met le code dans le QUERY STRING
+            // ("?code=..."), pas dans le hash ("#access_token=...", ancien flow "implicit").
+            // Vérifier les deux : sinon un lien PKCE parfaitement valide affichait "Lien expiré"
+            // à chaque fois — bug confirmé prod (docs/backlog-produit.md GardenSage), fix porté
+            // depuis TailorSage (`fde18d0`, déjà validé sur ce même mécanisme).
+            var hasToken = hash && hash.includes('access_token');
+            var hasCode = search && search.includes('code=');
 
             // Nettoyer l'URL (cacher les paramètres techniques)
-            if (hash && window.history.replaceState) {
+            if ((hash || search) && window.history.replaceState) {
                 window.history.replaceState(null, '', window.location.pathname);
             }
 
-            if (hash && hash.includes('access_token')) {
-                // Lien valide — rediriger vers l'app
+            if (hasToken || hasCode) {
+                // Lien valide — rediriger vers l'app avec le même suffixe (hash pour implicit,
+                // query string pour PKCE).
+                var suffix = hasCode ? search : hash;
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('success').style.display = 'block';
-                document.getElementById('openApp').href = 'gardensage://auth/callback' + hash;
+                document.getElementById('openApp').href = 'gardensage://auth/callback' + suffix;
 
                 // Tenter l'ouverture automatique
                 setTimeout(function() {
-                    window.location.href = 'gardensage://auth/callback' + hash;
+                    window.location.href = 'gardensage://auth/callback' + suffix;
                 }, 500);
             } else {
-                // Pas de token — lien expiré ou invalide
+                // Ni token ni code — lien réellement expiré ou invalide
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('error').style.display = 'block';
             }
