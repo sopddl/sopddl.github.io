@@ -97,59 +97,110 @@
         <div class="tagline">La couture intelligente</div>
 
         <div id="loading">
-            <h1>Réinitialisation en cours...</h1>
+            <h1 data-t="loadingTitle">Vérification du lien…</h1>
             <div class="spinner active"></div>
-            <p>Nous vérifions votre lien de réinitialisation.<br>Vous allez être redirigé vers l'app.</p>
+            <p data-t="loadingText">Un instant, on vérifie ton lien de réinitialisation.</p>
         </div>
 
         <div id="success" style="display:none;">
-            <h1>✅ Lien vérifié !</h1>
-            <p>Ouvrez TailorSage pour choisir votre nouveau mot de passe.</p>
-            <a class="btn" id="openApp" href="tailorsage://auth/callback">Ouvrir TailorSage</a>
+            <h1 data-t="successTitle">✅ Lien vérifié</h1>
+            <p data-t="successText">Touche le bouton ci-dessous pour ouvrir TailorSage et choisir ton nouveau mot de passe.</p>
+            <a class="btn" id="openApp" href="tailorsage://auth/callback" data-t="openApp">Ouvrir TailorSage</a>
         </div>
 
         <div id="error" style="display:none;">
-            <h1>❌ Lien expiré</h1>
-            <p>Ce lien de réinitialisation n'est plus valide. Veuillez faire une nouvelle demande depuis l'app TailorSage.</p>
+            <h1 data-t="errorTitle">❌ Lien expiré ou déjà utilisé</h1>
+            <p data-t="errorText">Ce lien a déjà servi ou n'est plus valable. Dans l'app TailorSage, touche « Mot de passe oublié ? » pour recevoir un nouvel e-mail, puis ouvre le lien sur ce même appareil.</p>
         </div>
 
         <p class="footer">TailorSage — La couture intelligente</p>
     </div>
 
     <script>
-        (function() {
-            var hash = window.location.hash;
-            var search = window.location.search;
+        // Décision pure (testable) : que faire de l'adresse de retour de Supabase ?
+        // - PKCE : `?code=…` → ouvrir l'appli avec CE code ;
+        // - ancien flux implicite : `#access_token=…` → ouvrir l'appli avec le fragment ;
+        // - erreur (`error`, `error_code`, `error_description`, dans la requête OU le fragment) → « lien expiré ».
+        // 03/11/2026 : l'ancien test `search.includes('code=')` était vrai pour `error_code=otp_expired` : un lien
+        // déjà consommé (ouvert une 1re fois par la messagerie) affichait « Lien vérifié » et ouvrait l'appli sans
+        // code → page de connexion muette. On lit désormais les paramètres un par un.
+        function decideCallback(search, hash) {
+            var q = new URLSearchParams((search || '').replace(/^\?/, ''));
+            var h = new URLSearchParams((hash || '').replace(/^#/, ''));
+            var failed = q.has('error') || q.has('error_code') || q.has('error_description') ||
+                         h.has('error') || h.has('error_code') || h.has('error_description');
+            if (failed) return { kind: 'error' };
+            var code = q.get('code');
+            if (code) return { kind: 'open', suffix: '?code=' + encodeURIComponent(code) };
+            if (h.get('access_token')) return { kind: 'open', suffix: hash };
+            return { kind: 'error' };
+        }
 
-            // Supabase PKCE (flow par défaut désormais) met le code dans le
-            // QUERY STRING ("?code=..."), pas dans le hash ("#access_token=...",
-            // ancien flow "implicit"). Vérifier les deux : sinon un lien PKCE
-            // parfaitement valide affichait "Lien expiré" à chaque fois, quel
-            // que soit le délai avant clic (bug trouvé 2026-07-30, cf debug
-            // delivery reset password).
-            var hasToken = hash && hash.includes('access_token');
-            var hasCode = search && search.includes('code=');
+        var TEXTS = {
+            fr: {
+                loadingTitle: 'Vérification du lien…',
+                loadingText: 'Un instant, on vérifie ton lien de réinitialisation.',
+                successTitle: '✅ Lien vérifié',
+                successText: 'Touche le bouton ci-dessous pour ouvrir TailorSage et choisir ton nouveau mot de passe.',
+                openApp: 'Ouvrir TailorSage',
+                errorTitle: '❌ Lien expiré ou déjà utilisé',
+                errorText: "Ce lien a déjà servi ou n'est plus valable. Dans l'app TailorSage, touche « Mot de passe oublié ? » pour recevoir un nouvel e-mail, puis ouvre le lien sur ce même appareil."
+            },
+            en: {
+                loadingTitle: 'Checking your link…',
+                loadingText: "One moment, we're checking your reset link.",
+                successTitle: '✅ Link verified',
+                successText: 'Tap the button below to open TailorSage and choose your new password.',
+                openApp: 'Open TailorSage',
+                errorTitle: '❌ Link expired or already used',
+                errorText: 'This link has already been used or is no longer valid. In the TailorSage app, tap “Forgot password?” to get a new email, then open the link on this same device.'
+            },
+            es: {
+                loadingTitle: 'Comprobando el enlace…',
+                loadingText: 'Un momento, estamos comprobando tu enlace de restablecimiento.',
+                successTitle: '✅ Enlace verificado',
+                successText: 'Toca el botón de abajo para abrir TailorSage y elegir tu nueva contraseña.',
+                openApp: 'Abrir TailorSage',
+                errorTitle: '❌ Enlace caducado o ya usado',
+                errorText: 'Este enlace ya se ha usado o ya no es válido. En la app TailorSage, toca «¿Contraseña olvidada?» para recibir un nuevo correo y abre el enlace en este mismo dispositivo.'
+            },
+            it: {
+                loadingTitle: 'Verifica del link…',
+                loadingText: 'Un attimo, stiamo verificando il tuo link di reimpostazione.',
+                successTitle: '✅ Link verificato',
+                successText: 'Tocca il pulsante qui sotto per aprire TailorSage e scegliere la tua nuova password.',
+                openApp: 'Apri TailorSage',
+                errorTitle: '❌ Link scaduto o già usato',
+                errorText: "Questo link è già stato usato o non è più valido. Nell'app TailorSage, tocca «Password dimenticata?» per ricevere una nuova e-mail, poi apri il link su questo stesso dispositivo."
+            }
+        };
+
+        (function() {
+            if (typeof window === 'undefined') return;
+            var lang = ((navigator.language || 'fr').slice(0, 2)).toLowerCase();
+            var texts = TEXTS[lang] || TEXTS.fr;
+            document.documentElement.lang = TEXTS[lang] ? lang : 'fr';
+            var nodes = document.querySelectorAll('[data-t]');
+            for (var i = 0; i < nodes.length; i++) {
+                var key = nodes[i].getAttribute('data-t');
+                if (texts[key]) nodes[i].textContent = texts[key];
+            }
+
+            var decision = decideCallback(window.location.search, window.location.hash);
 
             // Nettoyer l'URL (cacher les paramètres techniques)
-            if ((hash || search) && window.history.replaceState) {
+            if ((window.location.search || window.location.hash) && window.history.replaceState) {
                 window.history.replaceState(null, '', window.location.pathname);
             }
 
-            if (hasToken || hasCode) {
-                // Lien valide — rediriger vers l'app avec le même suffixe
-                // (hash pour implicit, query string pour PKCE).
-                var suffix = hasCode ? search : hash;
-                document.getElementById('loading').style.display = 'none';
+            document.getElementById('loading').style.display = 'none';
+            if (decision.kind === 'open') {
+                var target = 'tailorsage://auth/callback' + decision.suffix;
                 document.getElementById('success').style.display = 'block';
-                document.getElementById('openApp').href = 'tailorsage://auth/callback' + suffix;
-
-                // Tenter l'ouverture automatique
-                setTimeout(function() {
-                    window.location.href = 'tailorsage://auth/callback' + suffix;
-                }, 500);
+                document.getElementById('openApp').href = target;
+                // Tentative d'ouverture automatique (certains navigateurs intégrés la bloquent : le bouton reste là).
+                setTimeout(function() { window.location.href = target; }, 500);
             } else {
-                // Ni token ni code — lien réellement expiré ou invalide
-                document.getElementById('loading').style.display = 'none';
                 document.getElementById('error').style.display = 'block';
             }
         })();
