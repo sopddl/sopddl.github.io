@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TailorSage — Nouveau mot de passe</title>
+    <meta name="robots" content="noindex">
+    <meta name="referrer" content="no-referrer">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f3eef1 0%, #ece1e7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #7B4B6A;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+        .brand {
+            font-size: 22px;
+            font-weight: 700;
+            color: #4a2d3f;
+            margin-bottom: 4px;
+        }
+        .tagline {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        .btn {
+            display: inline-block;
+            background: #7B4B6A;
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            transition: background 0.2s;
+            width: 100%;
+            max-width: 300px;
+        }
+        .btn:hover { background: #633a54; }
+        .footer {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 24px;
+        }
+        .spinner {
+            display: none;
+            margin: 20px auto;
+            width: 32px;
+            height: 32px;
+            border: 3px solid #ece1e7;
+            border-top-color: #7B4B6A;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .spinner.active { display: block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">✂️</div>
+        <div class="brand">TailorSage</div>
+        <div class="tagline">La couture intelligente</div>
+
+        <div id="ready" style="display:none;">
+            <h1 data-t="readyTitle">Choisir un nouveau mot de passe</h1>
+            <p data-t="readyText">Touche le bouton pour continuer sur ce téléphone.</p>
+            <a class="btn" id="go" href="#" data-t="go">Continuer</a>
+            <p class="footer" data-t="hint">Tu as la nouvelle version de l'app ? Tape plutôt le code de l'e-mail dans TailorSage.</p>
+        </div>
+
+        <div id="error" style="display:none;">
+            <h1 data-t="errorTitle">❌ Lien incomplet</h1>
+            <p data-t="errorText">Ce lien ne peut pas être ouvert. Dans l'app TailorSage, touche « Mot de passe oublié ? » pour recevoir un nouvel e-mail.</p>
+        </div>
+
+        <p class="footer">TailorSage — La couture intelligente</p>
+    </div>
+
+    <script>
+        // Page d'entrée du lien de l'e-mail « mot de passe oublié » (03/11/2026, décision B de Sophie).
+        // Le lien et le code d'un même e-mail reposent sur UN jeton : le premier qui sert l'efface. Une messagerie
+        // ou un antivirus qui ouvre les liens à l'avance (incident du 03/11) grillait le lien ET le code.
+        // Ici, rien n'est appelé à l'ouverture : le vrai lien Supabase (après `#u=`, jamais envoyé au serveur de
+        // cette page) n'est suivi qu'au TOUCHER du bouton. Seuls nos projets Supabase sont acceptés (pas de
+        // redirection ouverte).
+        var ALLOWED_HOSTS = ['ocfzcljrurqseguyiuuk.supabase.co', 'btmklnzgaabesvzqbxue.supabase.co'];
+
+        function extractVerifyUrl(hash) {
+            var raw = (hash || '').replace(/^#/, '');
+            if (raw.indexOf('u=') !== 0) return null;
+            var value = raw.slice(2).replace(/&amp;/g, '&');
+            // Le modèle d'e-mail peut insérer l'adresse telle quelle ou encodée : on décode tant que c'est encodé.
+            for (var i = 0; i < 3 && /^https?%3a/i.test(value); i++) {
+                try { value = decodeURIComponent(value); } catch (e) { return null; }
+            }
+            var url;
+            try { url = new URL(value); } catch (e) { return null; }
+            if (url.protocol !== 'https:') return null;
+            if (ALLOWED_HOSTS.indexOf(url.hostname) === -1) return null;
+            if (url.pathname !== '/auth/v1/verify') return null;
+            if (!url.searchParams.get('token')) return null;
+            if (url.searchParams.get('type') !== 'recovery') return null;
+            return url.toString();
+        }
+
+        var TEXTS = {
+            fr: {
+                readyTitle: 'Choisir un nouveau mot de passe',
+                readyText: 'Touche le bouton pour continuer sur ce téléphone.',
+                go: 'Continuer',
+                hint: "Tu as la nouvelle version de l'app ? Tape plutôt le code de l'e-mail dans TailorSage.",
+                errorTitle: '❌ Lien incomplet',
+                errorText: "Ce lien ne peut pas être ouvert. Dans l'app TailorSage, touche « Mot de passe oublié ? » pour recevoir un nouvel e-mail."
+            },
+            en: {
+                readyTitle: 'Choose a new password',
+                readyText: 'Tap the button to continue on this phone.',
+                go: 'Continue',
+                hint: 'Have the new version of the app? Type the code from the email in TailorSage instead.',
+                errorTitle: '❌ Incomplete link',
+                errorText: 'This link can’t be opened. In the TailorSage app, tap “Forgot password?” to get a new email.'
+            },
+            es: {
+                readyTitle: 'Elige una nueva contraseña',
+                readyText: 'Toca el botón para continuar en este teléfono.',
+                go: 'Continuar',
+                hint: '¿Tienes la nueva versión de la app? Mejor escribe el código del correo en TailorSage.',
+                errorTitle: '❌ Enlace incompleto',
+                errorText: 'Este enlace no se puede abrir. En la app TailorSage, toca «¿Contraseña olvidada?» para recibir un nuevo correo.'
+            },
+            it: {
+                readyTitle: 'Scegli una nuova password',
+                readyText: 'Tocca il pulsante per continuare su questo telefono.',
+                go: 'Continua',
+                hint: "Hai la nuova versione dell'app? Inserisci piuttosto il codice dell'e-mail in TailorSage.",
+                errorTitle: '❌ Link incompleto',
+                errorText: "Questo link non si può aprire. Nell'app TailorSage, tocca «Password dimenticata?» per ricevere una nuova e-mail."
+            }
+        };
+
+        (function() {
+            if (typeof window === 'undefined') return;
+            var lang = ((navigator.language || 'fr').slice(0, 2)).toLowerCase();
+            var texts = TEXTS[lang] || TEXTS.fr;
+            document.documentElement.lang = TEXTS[lang] ? lang : 'fr';
+            var nodes = document.querySelectorAll('[data-t]');
+            for (var i = 0; i < nodes.length; i++) {
+                var key = nodes[i].getAttribute('data-t');
+                if (texts[key]) nodes[i].textContent = texts[key];
+            }
+
+            var target = extractVerifyUrl(window.location.hash);
+            // Le jeton ne reste pas dans la barre d'adresse ni l'historique.
+            if (window.location.hash && window.history.replaceState) {
+                window.history.replaceState(null, '', window.location.pathname);
+            }
+            if (target) {
+                document.getElementById('ready').style.display = 'block';
+                document.getElementById('go').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.assign(target);
+                });
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        })();
+    </script>
+</body>
+</html>
